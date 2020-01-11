@@ -20,7 +20,7 @@ namespace SympliTool.Models
 
         public string ResultDelimiter
         {
-            get => "BNeawe vvjwJb AP7Wnd";
+           get => "BNeawe vvjwJb AP7Wnd";       
         }
 
     }

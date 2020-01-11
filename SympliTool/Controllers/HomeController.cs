@@ -45,32 +45,24 @@ namespace SympliTool.Controllers
                     setCache(result, s.Name);
                 }
 
-                var occurrenceList = result.Split("|").Select((x, index) =>
+                var zzz = result.Split(s.ResultDelimiter);
+
+                var occurrenceList = result.Split(s.ResultDelimiter).Select((x, index) =>
                     new {
                         Value = x,
                         Index = index,
-                        Contains = x.Contains(url)
+                        Contains = x.Contains(url+"<")
                     }).Where(x => x.Contains)
                       .Select(x => x.Index);
 
-                resultModels.Add(new Result { OccurrenceList = occurrenceList, Name = s.Name }); 
-            }
+                resultModels.Add(new Result { OccurrenceList = occurrenceList, Name = s.Name });
 
+                if (resultModels.Count == 0)
+                {
+                    resultModels.Add(new Result { Name = s.Name });
+                }
+            }
             return View("Search", resultModels);
-            /*
-            var result = cache.Get<string>("Result");
-
-            if (result == null)
-            {
-                var client = httpClientFactory.CreateClient();
-                result = await client.GetStringAsync($"{searchEngine.GetSearchString}{keywords}");
-                setCache(result);
-            }
-
-            Regex rgx = new Regex(url);
-            
-            return View("Search", rgx.Matches(result).Count);
-            */
         }
 
         private void setCache(string result, string engineName)

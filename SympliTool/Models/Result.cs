@@ -20,8 +20,8 @@ namespace SympliTool.Models
         }
 
         public override string ToString()
-        {
-            return string.Join(",", OccurrenceList.ToArray());
+        {        
+            return OccurrenceList.Count() == 0 ? "0" : string.Join(",", OccurrenceList.ToArray());
         }
     }
 }

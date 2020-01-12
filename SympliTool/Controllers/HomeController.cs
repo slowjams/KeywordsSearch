@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using SympliTool.Models;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 
 namespace SympliTool.Controllers
 {

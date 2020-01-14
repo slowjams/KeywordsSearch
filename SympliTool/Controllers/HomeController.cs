@@ -38,12 +38,12 @@ namespace SympliTool.Controllers
 
                 if (result == null)
                 {
-                    HttpClient client = new HttpClient();                  
+                    HttpClient client = new HttpClient();
                     result = await client.GetStringAsync($"{searchEngine.SearchString}{keywords}");
                     setCache(result, searchEngine.Name);
                 }
 
-                //use LINQ methods to seach if the output contains the url
+                //use LINQ to seach if the output contains the url
                 var occurrenceList = result.Split(searchEngine.ResultDelimiter).Select((x, index) =>
                     new {
                         Value = x,

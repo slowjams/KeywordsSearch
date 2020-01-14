@@ -1,10 +1,13 @@
 ﻿@model IEnumerable<Result>
 
-<h1>Below is the stats</h1>
+<div class="panel panel-success">
+    <div class="panel-heading text-center"><h4>Below is the stats</h4></div>
+    <div class="panel-body">
+        @foreach (var result in @Model)
+        {
+            <p class="font-weight-bolder h3"> @result in @result.Name</p>
+        }
+        <a class="nav-link pt-5" asp-action="Index">Return to main page</a>
+    </div> 
+</div>
 
-@foreach (var result in @Model)
-{
-    <p> @result in @result.Name</p>
-}
-
-<a asp-action="Index">Return to main page</a>

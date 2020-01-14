@@ -7,7 +7,7 @@ namespace SympliTool.Models
 {
     public interface ISearchEngine
     {
-        string GetSearchString
+        string SearchString
         {
             get;
         }

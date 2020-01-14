@@ -11,20 +11,18 @@ namespace SympliTool.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IHttpClientFactory httpClientFactory;
         private IMemoryCache cache;
-        private IEnumerable<ISearchEngine> searchEngines;
+        private IEnumerable<ISearchEngineFactory> searchEngineFactories;
 
-        public HomeController(IHttpClientFactory httpClientFactory, IMemoryCache cache, IEnumerable<ISearchEngine> searchEngines)
+        public HomeController( IMemoryCache cache, IEnumerable<ISearchEngineFactory> searchEngineFactories)
         {
-            this.httpClientFactory = httpClientFactory;
             this.cache = cache;
-            this.searchEngines = searchEngines;
+            this.searchEngineFactories = searchEngineFactories;
         }
 
         public ActionResult Index()
         {
-            var engineNames = searchEngines.Select(s => s.Name);
+            var engineNames = searchEngineFactories.Select(s => s.CreateSearchEngine().Name);
             return View("Index", string.Join(", ", engineNames));
         }
 
@@ -32,20 +30,21 @@ namespace SympliTool.Controllers
         {
             List<Result> resultModels = new List<Result>();
 
-            foreach (var s in searchEngines)
+            foreach (var s in searchEngineFactories)
             {
-                var result = cache.Get<string>(s.Name);
+                ISearchEngine searchEngine = s.CreateSearchEngine();
+
+                var result = cache.Get<string>(searchEngine.Name);
 
                 if (result == null)
                 {
-                    var client = httpClientFactory.CreateClient();
-                    result = await client.GetStringAsync($"{s.GetSearchString}{keywords}");
-                    setCache(result, s.Name);
+                    HttpClient client = new HttpClient();                  
+                    result = await client.GetStringAsync($"{searchEngine.SearchString}{keywords}");
+                    setCache(result, searchEngine.Name);
                 }
 
-                var zzz = result.Split(s.ResultDelimiter);
-
-                var occurrenceList = result.Split(s.ResultDelimiter).Select((x, index) =>
+                //use LINQ methods to seach if the output contains the url
+                var occurrenceList = result.Split(searchEngine.ResultDelimiter).Select((x, index) =>
                     new {
                         Value = x,
                         Index = index,
@@ -53,11 +52,11 @@ namespace SympliTool.Controllers
                     }).Where(x => x.Contains)
                       .Select(x => x.Index);
 
-                resultModels.Add(new Result { OccurrenceList = occurrenceList, Name = s.Name });
+                resultModels.Add(new Result { OccurrenceList = occurrenceList, Name = searchEngine.Name });
 
                 if (resultModels.Count == 0)
                 {
-                    resultModels.Add(new Result { Name = s.Name });
+                    resultModels.Add(new Result { Name = searchEngine.Name });
                 }
             }
             return View("Search", resultModels);

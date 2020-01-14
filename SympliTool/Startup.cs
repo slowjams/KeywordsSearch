@@ -28,9 +28,11 @@ namespace SympliTool
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddTransient<ISearchEngine, Google>();  // can register other search engine such as "Bing"
+
+            services.AddTransient<ISearchEngineFactory, IGoogleFactory>();
+            //services.AddTransient<ISearchEngineFactory, IBingFactory>(); // register other search engines such as "Bing", "Yahoo' etc, the HomeController will receive a collection of those concrete factories
+
             services.AddMemoryCache();
-            services.AddHttpClient();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

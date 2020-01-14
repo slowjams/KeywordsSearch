@@ -7,20 +7,31 @@ namespace SympliTool.Models
 {
     public class Google : ISearchEngine
     {
-        public string GetSearchString  
+        private string searchString;
+        private string name;
+        private string resultDelimiter;
+
+        public Google(string searchString, string name, string resultDelimiter)
         {
-            get => @"https://www.google.com/search?num=100&q=";
-           
+            this.searchString = searchString;
+            this.name = name;
+            this.resultDelimiter = resultDelimiter;
+        }
+
+        public string SearchString  
+        {
+            get => searchString;
+            
         }
 
         public string Name
         {
-            get => "Google";
+            get => name;
         }
 
         public string ResultDelimiter
         {
-           get => "BNeawe vvjwJb AP7Wnd";       
+           get => resultDelimiter;       
         }
 
     }

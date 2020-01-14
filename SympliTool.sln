@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SympliTool", "SympliTool\SympliTool.csproj", "{56B4B9EA-4540-4E67-A99A-29F5FA7C1015}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SympliTool", "SympliTool\SympliTool.csproj", "{56B4B9EA-4540-4E67-A99A-29F5FA7C1015}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SympliTool.Tests", "SympliTool.Tests\SympliTool.Tests.csproj", "{89E487C1-4AB0-4EE3-B4FC-59F0A3267E4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{56B4B9EA-4540-4E67-A99A-29F5FA7C1015}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56B4B9EA-4540-4E67-A99A-29F5FA7C1015}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56B4B9EA-4540-4E67-A99A-29F5FA7C1015}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89E487C1-4AB0-4EE3-B4FC-59F0A3267E4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89E487C1-4AB0-4EE3-B4FC-59F0A3267E4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89E487C1-4AB0-4EE3-B4FC-59F0A3267E4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89E487C1-4AB0-4EE3-B4FC-59F0A3267E4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

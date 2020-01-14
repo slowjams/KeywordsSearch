@@ -38,7 +38,7 @@ namespace SympliTool
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (!env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -46,7 +46,7 @@ namespace SympliTool
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

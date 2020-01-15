@@ -14,11 +14,13 @@ namespace SympliTool.Controllers
     {
         private IMemoryCache cache;
         private IEnumerable<ISearchEngineFactory> searchEngineFactories;
+        private IHttpClientFactory clientFactory;
 
-        public HomeController( IMemoryCache cache, IEnumerable<ISearchEngineFactory> searchEngineFactories)
+        public HomeController(IHttpClientFactory clientFactory, IMemoryCache cache, IEnumerable<ISearchEngineFactory> searchEngineFactories)
         {
             this.cache = cache;
             this.searchEngineFactories = searchEngineFactories;
+            this.clientFactory = clientFactory;
         }
 
         public ActionResult Index()
@@ -39,19 +41,13 @@ namespace SympliTool.Controllers
 
                 if (result == null)
                 {
-                    HttpClient client = new HttpClient();
+                    var client = clientFactory.CreateClient();
                     result = await client.GetStringAsync($"{searchEngine.SearchString}{keywords}");
                     setCache(result, searchEngine.Name);
                 }
-
-                //use LINQ to seach if the output contains the url
-                var occurrenceList = result.Split(searchEngine.ResultDelimiter).Select((x, index) =>
-                    new {
-                        Value = x,
-                        Index = index,
-                        Contains = x.Contains(url+"<")
-                    }).Where(x => x.Contains)
-                      .Select(x => x.Index);
+              
+                var htmlParseChecker = new HtmlParseChecker();
+                var occurrenceList = htmlParseChecker.ParseCheck(result, url + "<", searchEngine.ResultDelimiter);
 
                 resultModels.Add(new Result { OccurrenceList = occurrenceList, Name = searchEngine.Name });
 

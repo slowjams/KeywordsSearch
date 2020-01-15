@@ -15,12 +15,14 @@ namespace SympliTool.Controllers
         private IMemoryCache cache;
         private IEnumerable<ISearchEngineFactory> searchEngineFactories;
         private IHttpClientFactory clientFactory;
+        private IHtmlParseChecker htmlParseChecker;
 
-        public HomeController(IHttpClientFactory clientFactory, IMemoryCache cache, IEnumerable<ISearchEngineFactory> searchEngineFactories)
+        public HomeController(IHttpClientFactory clientFactory, IMemoryCache cache, IEnumerable<ISearchEngineFactory> searchEngineFactories, IHtmlParseChecker htmlParseChecker)
         {
             this.cache = cache;
-            this.searchEngineFactories = searchEngineFactories;
             this.clientFactory = clientFactory;
+            this.searchEngineFactories = searchEngineFactories;  
+            this.htmlParseChecker = htmlParseChecker;
         }
 
         public ActionResult Index()
@@ -46,7 +48,6 @@ namespace SympliTool.Controllers
                     setCache(result, searchEngine.Name);
                 }
               
-                var htmlParseChecker = new HtmlParseChecker();
                 var occurrenceList = htmlParseChecker.ParseCheck(result, url + "<", searchEngine.ResultDelimiter);
 
                 resultModels.Add(new Result { OccurrenceList = occurrenceList, Name = searchEngine.Name });

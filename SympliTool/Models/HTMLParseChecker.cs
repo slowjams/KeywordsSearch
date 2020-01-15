@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SympliTool.Models
 {
-    public class HtmlParseChecker
+    public class HtmlParseChecker : IHtmlParseChecker
     {
         public IEnumerable<int> ParseCheck(string result, string searchText, string delimiter)
         {
